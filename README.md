@@ -9,4 +9,16 @@ g++ main.cpp -o main
 ./main
 ```
 
+# install
+
+```bash
+npm i . -g
+```
+or with npm 
+
+```bash
+npm i nodecpp -g
+```
+
+
 Thats it. For now it will not watch other files
