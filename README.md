@@ -38,5 +38,9 @@ than run
 nodecpp
 ```
 
+if you want to run other files
+```
+nodecpp other
+```
 
 Thats it. For now it will not watch other files

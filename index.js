@@ -3,12 +3,15 @@ console.clear();
 const fs = require('fs');
 const exec = require('child_process').exec;
 const chalk = require('chalk');
-const cppFile = './main.cpp';
+const inquirer = require('inquirer');
+const glob = require("glob")
+
+let cppFile = './main.cpp';
 
 const watch = (file) => {
     compile(file);  // run first time
     fs.watchFile(file, {interval: 250}, (curr, prev) => {
-        succes(`>> ${file} file change`);
+        info(`${file} file change`);
         compile(file);
     });
 }
@@ -45,10 +48,10 @@ const run = (file) => {
 }
 
 const compile = (file) => {
-    console.clear();
     info(` compiling ${file}`);
     const command = exec(`g++ ${file} -o ${file.replace(".cpp", "")}`);
     let isError = false;
+
     command.stdout.on('data', (data) => {
         terminal(data);
     });
@@ -59,17 +62,45 @@ const compile = (file) => {
     });
 
     command.stdout.on('end', (data) => {
-        if(!isError) {
+        if (!isError) {
             succes(` compile OK ${file}`);
             isError = true;
             run(file);
+
         }
     });
 }
 
+const fileMenu = () => {
+    glob("*.cpp", {}, (er, files) => {
+        const questions = [{
+            type: 'list',
+            name: 'file',
+            message: 'Which file do you want to watch?',
+            choices: files,
+            filter: function (val) {
+                return val.toLowerCase();
+            }
+        }];
+        inquirer
+            .prompt(questions)
+            .then(answer => {
+                watch(`./${answer.file}`);
+            });
+    });
+
+
+}
+
 if (fs.existsSync(cppFile)) {
-    succes(" main.cpp found");
-    watch(cppFile);
+    // succes(" main.cpp found");
+    if (process.argv[2]) {
+        // TODO: make options
+        fileMenu();
+    } else {
+        watch(cppFile);
+    }
+
 } else {
-    error(" main.cpp NOT found");
+    error(" main.cpp NOT found and no arguments");
 }

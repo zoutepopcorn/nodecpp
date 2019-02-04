@@ -1,22 +1,31 @@
 {
   "name": "nodecpp",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "compile, run and watch main.ccp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "nodecpp" : "./index.js"
+    "nodecpp": "./index.js"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/zoutepopcorn/nodecpp.git"
   },
-  "keywords": ["cpp", "g++", "compile", "watch", "run", "main.cpp"],
+  "keywords": [
+    "cpp",
+    "g++",
+    "compile",
+    "watch",
+    "run",
+    "main.cpp"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "glob": "^7.1.3",
+    "inquirer": "^6.2.2"
   }
 }
